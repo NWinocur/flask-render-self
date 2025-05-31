@@ -1,39 +1,47 @@
 from flask import Flask, request, render_template
 from pickle import load
 import os
+import pickle
 
 
 # Define the Flask app and set the template folder path
 app = Flask(__name__, template_folder='../templates')
 
-# Get the absolute path to the model file
-model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../models/decision_tree_classifier_default_42.sav")
-model = load(open(model_path, "rb"))
+# Load the trained pipeline
+model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../models/pipeline.pkl")
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
 
 class_dict = {
-    "0": "Iris setosa",
-    "1": "Iris versicolor",
-    "2": "Iris virginica"
+    0: "Extrovert",
+    1: "Introvert"
 }
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        # Handle form submission
-        val1 = float(request.form["val1"])
-        val2 = float(request.form["val2"])
-        val3 = float(request.form["val3"])
-        val4 = float(request.form["val4"])
+        # Create dictionary of features from form input
+        input_data = {
+            'Time_spent_Alone': request.form.get("Time_spent_Alone") or None,
+            'Stage_fear': request.form.get("Stage_fear") or None,
+            'Social_event_attendance': request.form.get("Social_event_attendance") or None,
+            'Going_outside': request.form.get("Going_outside") or None,
+            'Drained_after_socializing': request.form.get("Drained_after_socializing") or None,
+            'Friends_circle_size': request.form.get("Friends_circle_size") or None,
+            'Post_frequency': request.form.get("Post_frequency") or None,
+        }
 
-        data = [[val1, val2, val3, val4]]
-        prediction = str(model.predict(data)[0])
+        # Convert to DataFrame
+        import pandas as pd
+        input_df = pd.DataFrame([input_data])
+
+        # Predict
+        prediction = model.predict(input_df)[0]
         pred_class = class_dict[prediction]
     else:
-        # Handle initial GET request
         pred_class = None
 
-    # Render the template with the prediction result (or None if GET request)
     return render_template("index.html", prediction=pred_class)
 
 

@@ -42,14 +42,18 @@
 </head>
 <body>
     <h2>Enter the values</h2>
-    
+
     <form action="/" method="post">
-        Petal width: <input type="number" step="any" name="val1" required><br><br>
-        Petal length: <input type="number" step="any" name="val2" required><br><br>
-        Sepal width: <input type="number" step="any" name="val3" required><br><br>
-        Sepal length: <input type="number" step="any" name="val4" required><br><br>
+        Time spent alone (hours/day): <input type="number" name="Time_spent_Alone" step="any"><br><br>
+        Stage fear: <input type="text" name="Stage_fear" placeholder="Yes or No"><br><br>
+        Social event attendance (0–10): <input type="number" name="Social_event_attendance" step="any"><br><br>
+        Going outside frequency (0–7): <input type="number" name="Going_outside" step="any"><br><br>
+        Drained after socializing: <input type="text" name="Drained_after_socializing" placeholder="Yes or No"><br><br>
+        Friends circle size: <input type="number" name="Friends_circle_size" step="any"><br><br>
+        Social media post frequency (0–10): <input type="number" name="Post_frequency" step="any"><br><br>
         <input type="submit" value="Predict">
     </form>
+    
     
     {% if prediction != None %}
         <h3>Prediction: {{ prediction }}</h3>
