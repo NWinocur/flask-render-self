@@ -84,8 +84,13 @@
       <input type="submit" value="Predict" />
     </form>
 
-    {% if prediction != None %}
-    <h3>Prediction: {{ prediction }}</h3>
+    {% if probabilities %}
+    <h3>Prediction Confidence:</h3>
+    <ul>
+      {% for label, prob in probabilities.items() %}
+      <li>{{ label }}: {{ prob }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
   </body>
 </html>

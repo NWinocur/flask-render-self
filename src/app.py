@@ -35,7 +35,7 @@ def index():
             'Post_frequency': request.form.get("Post_frequency") or None,
         }
         
-        if request.form.get("Friends_circle_size") > MAX_FRIENDS:
+        if float(request.form.get("Friends_circle_size")) > MAX_FRIENDS:
             message = f"Note: Friend count capped at {MAX_FRIENDS} to stay within model’s trained range."
 
         # Convert to DataFrame
@@ -44,11 +44,18 @@ def index():
 
         # Predict
         prediction = model.predict(input_df)[0]
+        proba = model.predict_proba(input_df)[0]
+
+        # Map numeric prediction to label
         pred_class = class_dict[prediction]
+
+        # Get probability for each class label
+        proba_dict = {class_dict[i]: f"{round(prob * 100, 1)}%" for i, prob in enumerate(proba)}
+
     else:
         pred_class = None
 
-    return render_template("index.html", prediction=pred_class)
+    return render_template("index.html", prediction=pred_class, probabilities=proba_dict)
 
 
 if __name__ == "__main__":
