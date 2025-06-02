@@ -1,62 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Iris - Model prediction</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        input[type="submit"] {
-            background-color: #786;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #555;
-        }
-        h3 {
-            margin-top: 20px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 4px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #f4f4f4;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      }
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+      input[type="submit"] {
+        background-color: #786;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #555;
+      }
+      h3 {
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 4px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Enter the values</h2>
 
     <form action="/" method="post">
-        Time spent alone (hours/day): <input type="number" name="Time_spent_Alone" step="any"><br><br>
-        Stage fear: <input type="text" name="Stage_fear" placeholder="Yes or No"><br><br>
-        Social event attendance (0–10): <input type="number" name="Social_event_attendance" step="any"><br><br>
-        Going outside frequency (0–7): <input type="number" name="Going_outside" step="any"><br><br>
-        Drained after socializing: <input type="text" name="Drained_after_socializing" placeholder="Yes or No"><br><br>
-        Friends circle size: <input type="number" name="Friends_circle_size" step="any"><br><br>
-        Social media post frequency (0–10): <input type="number" name="Post_frequency" step="any"><br><br>
-        <input type="submit" value="Predict">
+      Time spent alone (hours/day):
+      <input type="number" name="Time_spent_Alone" step="any" /><br /><br />
+      Stage fear:
+      <br />
+      <input type="radio" id="sf_yes" name="Stage_fear" value="Yes" required />
+      <label for="sf_yes">Yes</label><br />
+      <input type="radio" id="sf_no" name="Stage_fear" value="No" />
+      <label for="sf_no">No</label><br /><br />
+      Social event attendance (0–10):
+      <input
+        type="number"
+        name="Social_event_attendance"
+        step="any"
+      /><br /><br />
+      Going outside frequency (0–7):
+      <input type="number" name="Going_outside" step="any" /><br /><br />
+      Drained after socializing:
+      <br />
+      <input
+        type="radio"
+        id="dr_yes"
+        name="Drained_after_socializing"
+        value="Yes"
+        required
+      />
+      <label for="dr_yes">Yes</label><br />
+      <input
+        type="radio"
+        id="dr_no"
+        name="Drained_after_socializing"
+        value="No"
+      />
+      <label for="dr_no">No</label><br /><br />
+      Friends circle size:
+      <input type="number" name="Friends_circle_size" step="any" /><br /><br />
+      Social media post frequency (0–10):
+      <input type="number" name="Post_frequency" step="any" /><br /><br />
+      <input type="submit" value="Predict" />
     </form>
-    
-    
+
     {% if prediction != None %}
-        <h3>Prediction: {{ prediction }}</h3>
+    <h3>Prediction: {{ prediction }}</h3>
     {% endif %}
-</body>
+  </body>
 </html>

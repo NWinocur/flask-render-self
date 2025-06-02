@@ -21,6 +21,9 @@ class_dict = {
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        
+        MAX_FRIENDS = 15
+        
         # Create dictionary of features from form input
         input_data = {
             'Time_spent_Alone': request.form.get("Time_spent_Alone") or None,
@@ -28,9 +31,12 @@ def index():
             'Social_event_attendance': request.form.get("Social_event_attendance") or None,
             'Going_outside': request.form.get("Going_outside") or None,
             'Drained_after_socializing': request.form.get("Drained_after_socializing") or None,
-            'Friends_circle_size': request.form.get("Friends_circle_size") or None,
+            'Friends_circle_size': min(float(request.form.get("Friends_circle_size")), MAX_FRIENDS) if request.form.get("Friends_circle_size") else None,
             'Post_frequency': request.form.get("Post_frequency") or None,
         }
+        
+        if request.form.get("Friends_circle_size") > MAX_FRIENDS:
+            message = f"Note: Friend count capped at {MAX_FRIENDS} to stay within model’s trained range."
 
         # Convert to DataFrame
         import pandas as pd
