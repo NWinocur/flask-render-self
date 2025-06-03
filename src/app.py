@@ -20,6 +20,8 @@ class_dict = {
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    pred_class = None
+    proba_dict = None
     if request.method == "POST":
         
         MAX_FRIENDS = 15
