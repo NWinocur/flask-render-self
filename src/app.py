@@ -54,6 +54,7 @@ def index():
 
     else:
         pred_class = None
+        proba_dict = None
 
     return render_template("index.html", prediction=pred_class, probabilities=proba_dict)
 
